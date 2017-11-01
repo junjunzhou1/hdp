@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>幻灯片</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#play{
+			width: 400px;
+			height: 200px;
+			position: absolute;
+			top: 100px;
+			left: 50%;
+			margin-left: -200px;
+			overflow: hidden;
+		}
+		ol{
+			position: absolute;
+			bottom: 20px;
+			right: 10px;
+			z-index: 2;
+		}
+		ol li{
+			width: 15px;
+			height: 15px;
+			list-style: none;
+			float: left;
+			margin: 0 5px;
+			text-align: center;
+			font-size: 14px;
+			line-height: 15px;
+		}
+		.active{
+			background: yellow;
+		}
+		ul{
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		ul li{
+			list-style: none;
+		}
+		ul li img{
+			width: 400px;
+			height: 200px;
+		}
+	</style>
+	<script type="text/javascript" src="move2.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			var oDiv=document.getElementById('play');
+			var oOl=oDiv.getElementsByTagName('ol')[0];
+			var aBtn=oOl.getElementsByTagName('li');
+			var oUl=oDiv.getElementsByTagName('ul')[0];
+
+			var now=0;
+			var timer=null;
+
+			for(i=0;i<aBtn.length;i++){
+				aBtn[i].index=i;
+
+				aBtn[i].onmouseover=function(){
+					now=this.index;
+					tab();
+				}
+			}
+			function tab(){
+				for(i=0;i<aBtn.length;i++){
+						aBtn[i].className=''
+					}
+					aBtn[now].className='active';
+					starMove(oUl,{top:-203*now});
+			}
+			function next(){
+				now++;
+				if(now==aBtn.length){
+					now=0;
+				}
+				tab();
+			}
+			timer=setInterval(next,2000);
+			oDiv.onmouseover=function(){
+				clearInterval(timer);
+			}
+			oDiv.onmouseout=function(){
+				timer=setInterval(next,2000);
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="play" class="play">
+		<ol>
+			<li class="active">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+			<li>7</li>
+		</ol>
+		<ul>
+			<li><img src="images/01.jpg"></li>
+			<li><img src="images/02.jpg"></li>
+			<li><img src="images/03.jpg"></li>
+			<li><img src="images/04.jpg"></li>
+			<li><img src="images/05.jpg"></li>
+			<li><img src="images/06.jpg"></li>
+			<li><img src="images/07.jpg"></li>
+		</ul>
+	</div>
+</body>
+</html>
